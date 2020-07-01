@@ -3,7 +3,11 @@
 
 This repository contains the code of the video course [Ngrx (with NgRx Data) - The Complete Guide](https://angular-university.io/course/ngrx-course).
 
+<<<<<<< HEAD
 This course repository is updated to Angular v18:
+=======
+This course repository is updated to Angular v10 and NgRx 8:
+>>>>>>> f61d48d (upgrade to Angular 10)
 
 ![Ngrx (with NgRx Data) - The Complete Guide](https://angular-university.s3-us-west-1.amazonaws.com/course-images/ngrx-v2.png)
 
