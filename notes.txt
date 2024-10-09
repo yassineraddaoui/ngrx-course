@@ -1,0 +1,36 @@
+
+RxJS vs NgRX
+RxJS is an async event handling library. And thats it. It builds upon the idea of the observable pattern and gives a few slightly higher level abstractions on top of that (like Subjects) for more fine grained event handling. Look into JavaScript Promises. It's a similar idea. A Promise to an Observable is like a single value to an array. A Promise resolves (once) and an Observable can emit multiple times. With a promise you can add a callback to be called eith the result of the Promise while with an observable you can subscribe to the events it emits.
+And RxJS provides a bunch of operators to handle these. Thats all the library does and it does it pretty damn good.
+NgRX is a whole different can of worms, solving a different problem. It implements the Redux State management pattern in Angular and is heavily using RxJS. (Just like Angular uses RxJS).
+
+
+
+Without State Management:
+◇ In traditional setups, the lifecycle of data (often represented as observables) is tied to the lifecycle of the component.
+
+◇ When navigating away from a component and returning, the component is destroyed and recreated. This means we often need to make new HTTP requests to fetch data again, which is inefficient.
+
+Problems:
+▪ Constant HTTP requests when switching between screens.
+▪ Redundant data fetching impacts performance and user experience.
+
+What We Want:
+▪ An in-memory database on the client side that holds data while the app is active.
+▪ Immediate reflection of data modifications.
+▪ Enhanced performance and smoother user experience.
+
+Solution: We need a state management tool like NgRx to avoid these issues.
+
+What is NgRx Store?
+• The store is like an in-memory database that holds data shared across multiple components of the application.
+• Components do not directly modify the state (the data stored in the store). Instead, they dispatch an action, which is a simple JavaScript object containing a type (describing what should be done) and an optional payload (the data needed to perform the action).
+• The store, based on the action's type, will call a reducer function. A reducer is a plain JavaScript function that computes a new version of the state based on the current state and the dispatched action’s payload.
+
+
+NgRx Store Architecture:
+NgRx uses the store architecture to manage the state. Here's how it works:
+
+Dispatching Actions to the Store:
+To modify the store’s state, we use this.store.dispatch(ACTION).
+
