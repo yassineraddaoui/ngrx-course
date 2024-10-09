@@ -190,3 +190,12 @@ Usage: Ensuring state serializability helps maintain consistent behavior during 
 
 
 
+MetaReducers :
+it's a simple plane reducer function but what suppers it from a reducer that
+it's going to be processed before the normal reddducers are invoked .
+
+
+1- Action triggered 
+2- the store trigger any meta reducers that it might 
+have configured before handling the login action .
+3- a simple reducer handles the login action
