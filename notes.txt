@@ -34,3 +34,69 @@ NgRx uses the store architecture to manage the state. Here's how it works:
 Dispatching Actions to the Store:
 To modify the store’s state, we use this.store.dispatch(ACTION).
 
+Action:
+◇ A plain JavaScript object sent to the store to trigger a modification of the state.
+◇ Every action has a type (describing what happened) and usually a payload (data needed for the action).
+◇ Actions are events reporting that something has happened at the component level.
+◇ Actions inform the store about an occurrence, but they are the only way to modify the state of the store.
+
+Example:
+	this.auth.login(userDetails)
+  .pipe(
+    tap(user => {
+      this.store.dispatch({
+        type: 'Login Action',
+        payload: { user }
+      });
+    })
+  ).subscribe();
+
+
+However, it's better to follow the convention by creating action files that define type-safe actions:
+
+Example:
+export const login = createAction(
+  '[Login Page] User Login',
+  props<{ user: User }>()
+);
+
+const newLoginAction = login({ user });
+
+
+
+Note: Dispatching an action does not modify the store state directly. The store needs to know how to handle the action through reducers.
+
+Reducer:
+ Documentation : Reducers in NgRx are responsible for handling transitions from one state to the next state in your application. Reducer functions handle these transitions by determining which actions to handle based on the action's type.
+• A reducer defines what the store should do in response to an action.
+• Reducers are functions that the store uses to calculate the new state based on the previous state and the action's payload.
+
+Important:
+◇ Reducers do not modify the state directly. Instead, they return a new version of the state.
+
+  1- create Actions loginAction
+  2- create a State* interface AppState
+  3- create the initialState of type State* initialState
+  4- create the reducer function
+  
+  export const scoreBoardReducer(
+  	initialState,
+	  on(login, state => {
+		  ...state,
+	 	 loggedIn:true
+		}
+	)
+  ); 
+  
+  After modyfing the state of the store now how to access the data !! 
+  one way is :
+  
+  constructor(private store:Store<AppStore>){}
+  
+  ngOnInit(){
+  this.isLoggedIn$ = this.store
+  	.pipe(
+		map(state=> !!state['auth'].user) // negating two time to converting to a boolean  	
+	  );
+  }
+  you can query the store like this but there is a better way!
