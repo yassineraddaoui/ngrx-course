@@ -100,3 +100,76 @@ Important:
 	  );
   }
   you can query the store like this but there is a better way!
+
+
+Selectors:
+  
+	documentation : 
+		Selectors are pure functions used for obtaining slices of store state.
+
+  
+  export const isLoggedIn = createSelector(
+  	state=>state["auth"],
+  	(auth)=> !!auth.user
+  );
+  
+  so when we want to get the value :
+	
+  
+  as long as the input(state object) doesnt change the output is not going to be recalculated !
+	//mapping function with a memory !!   
+ ngOnInit(){
+ 	this.isLoggedIn$= this.store
+ 		.pipe(
+			select(isLoggedIn) 		
+		 );
+ }
+
+	Select (distinctUntilChanged)vs map
+	Selectors are memoized, which means that they're only invoked when the state changes
+
+
+Effects:
+Documentation:
+
+In a service-based Angular application, components typically interact directly with external resources through services. However, NgRx effects provide a way to handle those interactions while keeping components isolated from these tasks. Effects allow us to manage asynchronous operations, such as fetching data, long-running tasks that produce multiple events, and other external interactions, without the components needing explicit knowledge of them.
+
+Example Without NgRx Effects:
+
+constructor(actions$: Actions) {
+    actions$.subscribe(action => {
+        // Wait for a login action to get emitted
+        if (action.type === '[Login Page] User Login') {
+            // Side Effect: Store user data in localStorage
+            localStorage.setItem('user', JSON.stringify(action['user']));
+        }
+    });
+}
+Side Effect: This is something additional we want to perform after an action has been dispatched and processed by the store (e.g., storing data in localStorage).
+Issues:
+Not type-safe.
+Lacks exception handling.
+NgRx Solution:
+Using NgRx, we can manage side effects in a more organized way, leveraging the createEffect function to define them declaratively and with type safety.
+
+Example with NgRx Effects:
+
+constructor(private actions$: Actions) {}
+
+login$ = createEffect(() => 
+    this.actions$.pipe(
+        ofType(AuthActions.login), // Listen for the login action
+        tap(action => localStorage.setItem('user', JSON.stringify(action.user))) // Side effect: store user data
+    ),
+    { dispatch: false } // This effect does not result in another action
+);
+OfType: Filters the actions to only respond to the specified action type (in this case, the login action).
+Tap: Executes side effects without modifying the stream.
+dispatch: false: This indicates that the effect does not dispatch a new action as a result.
+By using NgRx effects, we can handle side effects in a type-safe, maintainable, and organized way, separating concerns between the component and the external interactions.
+
+
+
+
+
+
