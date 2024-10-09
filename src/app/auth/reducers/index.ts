@@ -11,11 +11,13 @@ import {AuthActions} from '../action-types';
 
 
 export interface AuthState {
-    user: User
+    user: User,
+    salem:string
 }
 
 export const initialAuthState: AuthState = {
-    user: undefined
+    user: undefined,
+    salem:'ahla'
 };
 
 export const authReducer = createReducer(
@@ -24,12 +26,14 @@ export const authReducer = createReducer(
 
     on(AuthActions.login, (state, action) => {
         return {
+            ...state,
             user: action.user
         }
     }),
 
     on(AuthActions.logout, (state, action) => {
         return {
+            ...state,
             user: undefined
         }
     })

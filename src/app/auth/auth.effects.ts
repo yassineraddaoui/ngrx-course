@@ -8,6 +8,10 @@ import {Router} from '@angular/router';
 @Injectable()
 export class AuthEffects {
 
+    constructor(private actions$: Actions,
+        private router: Router) {
+
+}
     login$ = createEffect(() =>
         this.actions$
             .pipe(
@@ -29,11 +33,4 @@ export class AuthEffects {
                 })
             )
     , {dispatch: false});
-
-
-    constructor(private actions$: Actions,
-                private router: Router) {
-
-    }
-
 }
