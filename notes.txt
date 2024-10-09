@@ -169,7 +169,24 @@ dispatch: false: This indicates that the effect does not dispatch a new action a
 By using NgRx effects, we can handle side effects in a type-safe, maintainable, and organized way, separating concerns between the component and the external interactions.
 
 
+In NgRx, runtime checks are configuration options that enhance the robustness and correctness of your application's state management. Here’s an explanation of each runtime check:
 
+1. strictStateImmutability
+Purpose: Ensures that the state in your store is immutable.
+Description: When this check is enabled, NgRx will verify that the state object is not mutated directly. This is crucial because mutating the state can lead to unexpected behavior in your application and can cause issues with change detection.
+Usage: It helps developers follow best practices by ensuring that they always create new state objects rather than modifying existing ones.
+2. strictActionImmutability
+Purpose: Ensures that action objects remain immutable.
+Description: This check validates that action objects (the payload of actions dispatched to the store) are not mutated after they are dispatched. Like state immutability, action immutability is important for maintaining predictable state transitions.
+Usage: It prevents side effects that could occur if actions were modified after dispatching, helping to ensure that all parts of the application see a consistent action state.
+3. strictActionSerializability
+Purpose: Ensures that actions dispatched to the store are serializable.
+Description: This check confirms that all properties of action objects can be serialized, which is particularly useful for debugging and logging. Non-serializable objects can lead to issues when persisting state or debugging applications.
+Usage: By enforcing serializability, developers can avoid bugs related to state restoration, time travel debugging, and ensure that the application behaves consistently across different environments.
+4. strictStateSerializability
+Purpose: Ensures that the state stored in the NgRx store is serializable.
+Description: This check verifies that the entire state tree is composed of serializable objects. If the state contains non-serializable values, such as functions or complex objects, it may cause issues when trying to persist or reproduce the application state.
+Usage: Ensuring state serializability helps maintain consistent behavior during debugging and testing and allows for effective state transfer between different environments (e.g., server-side rendering).
 
 
 
